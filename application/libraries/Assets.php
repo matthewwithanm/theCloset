@@ -3,6 +3,7 @@
 class Assets {
 
 	private $ci;
+	private $host;
 
 	// Javascript variables
 	private $inline_scripts		= array();
@@ -33,12 +34,16 @@ class Assets {
 		// Load our default styles and scripts
 		$this->add_css($this->ci->config->item('assets_css'));
 		$this->add_js($this->ci->config->item('assets_js'));
+		
+		// Setup our host
+		$this->host = $this->ci->config->item('asset_host');
+		$this->host = empty($this->host) ? base_url() : $this->host;
 	}
 
 	//---------------------------------------------------------------
 	
 	//---------------------------------------------------------------
-	// STYLESHEET FUNCTIONS
+	// !STYLESHEET FUNCTIONS
 	//---------------------------------------------------------------
 
 	/**
@@ -108,7 +113,7 @@ class Assets {
 		{
 			foreach ($styles as $style)
 			{
-				echo '<link rel="stylesheet" type="text/css" href="' . base_url() . $path . $style . '.css" />' . "\n";
+				echo '<link rel="stylesheet" type="text/css" href="' . $this->host . $path . $style . '.css" />' . "\n";
 			}
 		} else
 		{
@@ -123,7 +128,7 @@ class Assets {
 	//---------------------------------------------------------------
 	
 	//---------------------------------------------------------------
-	// JAVASCRIPT FUNCTIONS
+	// !JAVASCRIPT FUNCTIONS
 	//---------------------------------------------------------------
 	
 	/**
@@ -165,15 +170,15 @@ class Assets {
 	 */
 	public function add_inline_js($scripts=null) 
 	{
-		if (is_string($scripts) && !empty($scripts))
-		{
-			$this->inline_scripts[] = $scripts;
-		} else if (is_array($scripts) && count($scripts) != 0)
+		if (is_array($scripts) && count($scripts) != 0)
 		{
 			foreach ($scripts as $js)
 			{
 				$this->inline_scripts[] = $js;
 			}
+		} else if (!empty($scripts))
+		{
+			$this->inline_scripts[] = $scripts;
 		}
 	}
 	
@@ -210,7 +215,7 @@ class Assets {
 			$js = $this->external_scripts;
 		}
 
-		$this->_external_js();
+		$this->_external_js($js);
 		$this->_inline_js();
 	}
 	
@@ -241,7 +246,7 @@ class Assets {
 		{
 			foreach ($js as $script)
 			{
-				echo '<script type="text/javascript" src="/' . $path . $script.'.js" ></script>' . "\n";
+				echo '<script type="text/javascript" src="'. $this->host . $path . $script.'.js" ></script>' . "\n";
 			}
 		} else
 		{
@@ -269,7 +274,7 @@ class Assets {
 	 * @return void
 	 */
 	private function _inline_js() 
-	{
+	{	
 		// Are there any scripts to include? 
 		if (count($this->inline_scripts) == 0)
 		{
@@ -291,6 +296,27 @@ class Assets {
 		echo "\n" . $this->ci->config->item('inline_js_closer') . "\n";
 		echo '</script>' . "\n";
 		
+	}
+	
+	//---------------------------------------------------------------
+	
+	//---------------------------------------------------------------
+	// !IMAGE FUNCTIONS
+	//---------------------------------------------------------------
+	
+	public function image($path='', $extras=array()) 
+	{
+		if (empty($path)) return;
+		
+		// Build our extra attributes string
+		$attributes = '';
+		
+		foreach ($extras as $key => $value)
+		{
+			$attributes .= " $key='$value'";
+		}
+		
+		echo '<img src="'. $this->host . $path .'"'. $attributes .' />';
 	}
 	
 	//---------------------------------------------------------------
