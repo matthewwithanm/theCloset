@@ -25,18 +25,24 @@
 	 */
 
 
-	$cache 	  = true;
-	$cachedir = dirname(__FILE__) . '/application/cache';
-	$cssdir   = dirname(__FILE__) . '/public/css';
-	$jsdir    = dirname(__FILE__) . '/public/js';
+	$cache 	  = false;
+	$cachedir = dirname(__FILE__) .'/application/cache';
+	$config_dir	= dirname(__FILE__) .'/application/config';
+	
+	// Load our assets config file...
+	require($config_dir .'/assets.php');
+	
+	// Setup our folder names for easier reference
+	$css_folder	= dirname(__FILE__) . $config['asset_folder'] . $config['css_folder']; 
+	$js_folder		= dirname(__FILE__) . $config['asset_folder'] . $config['js_folder']; 
 
 	// Determine the directory and type we should use
 	switch ($_GET['type']) {
 		case 'css':
-			$base = realpath($cssdir);
+			$base = realpath($css_folder);
 			break;
 		case 'javascript':
-			$base = realpath($jsdir);
+			$base = realpath($js_folder);
 			break;
 		default:
 			header ("HTTP/1.0 503 Not Implemented");
@@ -57,7 +63,7 @@
 			exit;	
 		}
 	
-		if (substr($path, 0, strlen($base)) != $base || !file_exists($path)) {
+		if (substr($path, 0, strlen($base)) != $base || !is_file($path)) {
 			header ("HTTP/1.0 404 Not Found");
 			exit;
 		}
@@ -103,7 +109,7 @@
 			// Try the cache first to see if the combined files were already generated
 			$cachefile = 'cache-' . $hash . '.' . $type . ($encoding != 'none' ? '.' . $encoding : '');
 			
-			if (file_exists($cachedir . '/' . $cachefile)) {
+			if (is_file($cachedir . '/' . $cachefile)) {
 				if ($fp = fopen($cachedir . '/' . $cachefile, 'rb')) {
 
 					if ($encoding != 'none') {

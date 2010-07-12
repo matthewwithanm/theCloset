@@ -7,16 +7,32 @@
 // version: 1.0 Beta 1
 //---------------------------------------------------------------
 
-$config['asset_folder']		= 'public';
+//---------------------------------------------------------------
+// Asset Folders
+//---------------------------------------------------------------
+
+/**
+ * The parent folder that your css/js/images are stored in. 
+ * 
+ * This should be relative to your index.php file.
+ */
+$config['asset_folder']		= 'public/';
+
+/**
+ * Individual asset folders for css/js/images.
+ * 
+ * Relative to the asset_folder.
+ */
 $config['js_folder']		= 'js';
 $config['css_folder']		= 'css';
+$config['img_folder']		= 'images';
 
 //---------------------------------------------------------------
 // Base Assets
 //---------------------------------------------------------------
 
-$config['assets_js']	= array('jquery', 'jquery.cycle', 'jquery.functions');
-$config['assets_css']	= array('style', 'inner');
+$config['assets_js']	= array('jquery');
+$config['assets_css']	= array('application');
 
 $config['inline_js_opener']	= '$(document).ready(function(){';
 $config['inline_js_closer'] = '});';
