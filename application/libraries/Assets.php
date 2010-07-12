@@ -105,7 +105,7 @@ class Assets {
 			$styles = $this->styles;
 		}
 		
-		$path = $this->ci->config->item('asset_folder') . '/' . $this->ci->config->item('css_folder') . '/';
+		$path = $this->ci->config->item('asset_folder') . $this->ci->config->item('css_folder') . '/';
 
 		// If development mode, then render individual links, 
 		// else create a link to the combine.php file.
@@ -238,7 +238,7 @@ class Assets {
 			return;
 		}
 		
-		$path = $this->ci->config->item('asset_folder') . '/' . $this->ci->config->item('js_folder') . '/';
+		$path = $this->ci->config->item('asset_folder') . $this->ci->config->item('js_folder') . '/';
 	
 		// If development mode, then render individual links, 
 		// else create a link to the combine.php file.
