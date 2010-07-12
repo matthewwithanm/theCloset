@@ -59,8 +59,6 @@
 	$lastmodified = 0;
 	while (list(,$element) = each($elements)) {
 		$path = $base .'/'. $element;
-		
-		echo 'Path = '.$path;
 	
 		if (($type == 'javascript' && substr($path, -3) != '.js') || 
 			($type == 'css' && substr($path, -4) != '.css')) {
