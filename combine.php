@@ -22,6 +22,9 @@
 	 * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 	 * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 	 * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+	 *
+	 * Modifications were made by Lonnie Ezell to work with theCloset Asset
+	 * management library.
 	 */
 
 	// Fake basepath so we can access CI's config files
@@ -136,6 +139,12 @@
 			$path = realpath($base . '/' . $element);
 			$contents .= "\n\n" . file_get_contents($path);
 		}
+		
+		// Compress the objects for a smaller file to send...
+		if ($type == 'css')
+		{
+			$contents = compress_css($contents);
+		}
 	
 		// Send Content-Type
 		header ("Content-Type: text/" . $type);
@@ -164,3 +173,28 @@
 		}
 	}	
 	
+//---------------------------------------------------------------
+// FUNCTIONS
+//---------------------------------------------------------------
+
+function compress_css($buffer)
+{
+	// Remove comments
+	$buffer = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $buffer);
+	
+	// Remove tabs, spaces, new lines, etc.
+	$buffer = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $buffer);
+	
+	// Remove unneccessary spaces
+	$buffer = str_replace('{ ', '{', $buffer);
+    $buffer = str_replace(' }', '}', $buffer);
+    $buffer = str_replace('; ', ';', $buffer);
+    $buffer = str_replace(', ', ',', $buffer);
+    $buffer = str_replace(' {', '{', $buffer);
+    $buffer = str_replace('} ', '}', $buffer);
+    $buffer = str_replace(': ', ':', $buffer);
+    $buffer = str_replace(' ,', ',', $buffer);
+    $buffer = str_replace(' ;', ';', $buffer);
+    
+    return $buffer;
+}
