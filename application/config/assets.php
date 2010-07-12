@@ -66,6 +66,6 @@ $config['servers']			= array(
  * expects to find at the root of the site. Otherwise, it will
  * render out the individual links to files.
  */
-$config['combine_on_dev']	= true;
+$config['combine_on_dev']	= false;
 $config['combine_on_test']	= true;
 $config['combine_on_prod']	= true;
