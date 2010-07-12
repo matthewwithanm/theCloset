@@ -110,7 +110,7 @@ class Assets {
 		// If development mode, then render individual links, 
 		// else create a link to the combine.php file.		
 		if ($this->ci->config->item('combine_on_'.devmode()) === false)
-		{echo 'here';
+		{
 			foreach ($styles as $style)
 			{
 				echo '<link rel="stylesheet" type="text/css" href="' . $this->host . $path . $style . '.css" />' . "\n";
@@ -343,11 +343,8 @@ class Assets {
 
 function devmode($test_mode=null)
 {
-    $servers = array(
-            'dev'    => 'ciplay.local',
-            'test'    => '',
-            'prod'    => ''
-        );
+	$ci =& get_instance();
+    $servers = $ci->config->item('servers');
 
     // To make testing more accurate, get rid of the http://, etc.
     $current_server = strtolower(trim(base_url(), ' /'));
