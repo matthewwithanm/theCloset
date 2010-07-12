@@ -24,25 +24,28 @@
 	 * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	 */
 
+	// Fake basepath so we can access CI's config files
+	define('BASEPATH', '');
 
-	$cache 	  = false;
-	$cachedir = dirname(__FILE__) .'/application/cache';
-	$config_dir	= dirname(__FILE__) .'/application/config';
-	
 	// Load our assets config file...
+	$config_dir	= 'application/config';
 	require($config_dir .'/assets.php');
+
+	// Cache settings
+	$cache 	  = false;
+	$cachedir = 'application/cache';
 	
 	// Setup our folder names for easier reference
-	$css_folder	= dirname(__FILE__) . $config['asset_folder'] . $config['css_folder']; 
-	$js_folder		= dirname(__FILE__) . $config['asset_folder'] . $config['js_folder']; 
+	$css_folder		= $config['asset_folder'] . $config['css_folder']; 
+	$js_folder		= $config['asset_folder'] . $config['js_folder']; 
 
 	// Determine the directory and type we should use
 	switch ($_GET['type']) {
 		case 'css':
-			$base = realpath($css_folder);
+			$base = $css_folder;
 			break;
 		case 'javascript':
-			$base = realpath($js_folder);
+			$base = $js_folder;
 			break;
 		default:
 			header ("HTTP/1.0 503 Not Implemented");
@@ -55,7 +58,9 @@
 	// Determine last modification date of the files
 	$lastmodified = 0;
 	while (list(,$element) = each($elements)) {
-		$path = realpath($base . '/' . $element);
+		$path = $base .'/'. $element;
+		
+		echo 'Path = '.$path;
 	
 		if (($type == 'javascript' && substr($path, -3) != '.js') || 
 			($type == 'css' && substr($path, -4) != '.css')) {

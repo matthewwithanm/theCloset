@@ -108,9 +108,9 @@ class Assets {
 		$path = $this->ci->config->item('asset_folder') . $this->ci->config->item('css_folder') . '/';
 
 		// If development mode, then render individual links, 
-		// else create a link to the combine.php file.
-		if (devmode('dev'))
-		{
+		// else create a link to the combine.php file.		
+		if ($this->ci->config->item('combine_on_'.devmode()) === false)
+		{echo 'here';
 			foreach ($styles as $style)
 			{
 				echo '<link rel="stylesheet" type="text/css" href="' . $this->host . $path . $style . '.css" />' . "\n";
@@ -242,7 +242,7 @@ class Assets {
 	
 		// If development mode, then render individual links, 
 		// else create a link to the combine.php file.
-		if (devmode('dev'))
+		if ($this->ci->config->item('combine_on_'.devmode()) === false)
 		{
 			foreach ($js as $script)
 			{

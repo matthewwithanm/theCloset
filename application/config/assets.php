@@ -1,4 +1,4 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php 
 
 ///---------------------------------------------------------------
 // theCLOSET ASSETS LIBRARY
@@ -32,7 +32,7 @@ $config['img_folder']		= 'images';
 //---------------------------------------------------------------
 
 $config['assets_js']	= array('jquery');
-$config['assets_css']	= array('application');
+$config['assets_css']	= array('application', 'app2');
 
 $config['inline_js_opener']	= '$(document).ready(function(){';
 $config['inline_js_closer'] = '});';
@@ -47,3 +47,25 @@ $config['inline_js_closer'] = '});';
  * Leave empty '' for the current domain.
  */
 $config['asset_host']		= '';
+
+/**
+ * The dev, test and production servers. Used by devmode() to
+ * to determine which is the active server. Also used by Assets
+ * to determine whether to combine the files or not.
+ */
+$config['servers']			= array(
+								'dev'	=> 'ciplay.local',
+								'test'	=> '',
+								'prod'	=> ''
+							); 
+
+/**
+ * Determines how Assets works on the dev, test, and production
+ * environments. If combine_on... is true for the current server,
+ * it will render out a link to the combine.php script that it
+ * expects to find at the root of the site. Otherwise, it will
+ * render out the individual links to files.
+ */
+$config['combine_on_dev']	= true;
+$config['combine_on_test']	= true;
+$config['combine_on_prod']	= true;
