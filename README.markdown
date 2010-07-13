@@ -4,4 +4,4 @@ The Closet is a library for CodeIgniter that makes maintaining your public asset
 
 Current Version: 1.1
 
-For full documentation, please see "the wiki":http://wiki.github.com/lonnieezell/theCloset/.
+For full documentation, please see [the wiki](http://wiki.github.com/lonnieezell/theCloset/).
