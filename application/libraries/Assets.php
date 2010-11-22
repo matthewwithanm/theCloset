@@ -121,7 +121,7 @@ class Assets {
 			$files = implode('.css,', $styles);
 			$files = $files . '.css';
 			
-			echo '<link rel="stylesheet" type="text/css" href="/combine.php?type=css&files=' . $files . '" />';
+			echo '<link rel="stylesheet" type="text/css" href="/combine.php?type=css&amp;files=' . $files . '" />';
 		}
 	}
 	
@@ -254,7 +254,7 @@ class Assets {
 			$files = implode('.js,', $js);
 			$files = $files . '.js';
 			
-			echo '<script type="text/javascript" href="/combine.php?type=javascript&files=' . $files . '" />';
+			echo '<script type="text/javascript" src="/combine.php?type=javascript&amp;files=' . $files . '"></script>';
 		}
 	}
 	
